@@ -11,9 +11,6 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { SiteHeader } from "../components/SiteHeader";
-import { SiteFooter } from "../components/SiteFooter";
-import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -80,13 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Wolves Basketball Academy — Baschet pentru copii în Bacău" },
-      { name: "description", content: "Academia de baschet pentru copii și juniori din Bacău. Tehnică, disciplină, spirit de echipă. Înscrie-te la un antrenament gratuit." },
-      { name: "author", content: "Wolves Basketball Academy" },
-      { property: "og:title", content: "Wolves Basketball Academy" },
-      { property: "og:description", content: "Formăm campioni pe teren și caractere pentru viață — baschet pentru copii și juniori în Bacău." },
+      { title: "Wolves Basketball Bacau" },
+      { name: "description", content: "Skill Installer Pro installs and configures the UI/UX Pro Max Skill for your website." },
+      { name: "author", content: "Lovable" },
+      { property: "og:title", content: "Wolves Basketball Bacau" },
+      { property: "og:description", content: "Skill Installer Pro installs and configures the UI/UX Pro Max Skill for your website." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Wolves Basketball Bacau" },
+      { name: "twitter:description", content: "Skill Installer Pro installs and configures the UI/UX Pro Max Skill for your website." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/59c960d9-1f63-42e9-8e4d-651ae9ee8a3a/id-preview-2be050f1--7bad164e-7a06-49c7-bff0-2680b2566fc8.lovable.app-1781187008740.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/59c960d9-1f63-42e9-8e4d-651ae9ee8a3a/id-preview-2be050f1--7bad164e-7a06-49c7-bff0-2680b2566fc8.lovable.app-1781187008740.png" },
     ],
     links: [
       {
@@ -120,14 +122,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-dvh flex-col bg-background text-foreground">
-        <SiteHeader />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <SiteFooter />
-        <Toaster theme="dark" position="top-center" richColors />
-      </div>
+      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      <Outlet />
     </QueryClientProvider>
   );
 }
