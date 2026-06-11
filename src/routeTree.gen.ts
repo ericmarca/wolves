@@ -9,8 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as NoutatiRouteImport } from './routes/noutati'
+import { Route as InscrieriRouteImport } from './routes/inscrieri'
+import { Route as GrupeRouteImport } from './routes/grupe'
+import { Route as GalerieRouteImport } from './routes/galerie'
+import { Route as DespreRouteImport } from './routes/despre'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 
+const NoutatiRoute = NoutatiRouteImport.update({
+  id: '/noutati',
+  path: '/noutati',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InscrieriRoute = InscrieriRouteImport.update({
+  id: '/inscrieri',
+  path: '/inscrieri',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrupeRoute = GrupeRouteImport.update({
+  id: '/grupe',
+  path: '/grupe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalerieRoute = GalerieRouteImport.update({
+  id: '/galerie',
+  path: '/galerie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DespreRoute = DespreRouteImport.update({
+  id: '/despre',
+  path: '/despre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +55,116 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/despre': typeof DespreRoute
+  '/galerie': typeof GalerieRoute
+  '/grupe': typeof GrupeRoute
+  '/inscrieri': typeof InscrieriRoute
+  '/noutati': typeof NoutatiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/despre': typeof DespreRoute
+  '/galerie': typeof GalerieRoute
+  '/grupe': typeof GrupeRoute
+  '/inscrieri': typeof InscrieriRoute
+  '/noutati': typeof NoutatiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/despre': typeof DespreRoute
+  '/galerie': typeof GalerieRoute
+  '/grupe': typeof GrupeRoute
+  '/inscrieri': typeof InscrieriRoute
+  '/noutati': typeof NoutatiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/despre'
+    | '/galerie'
+    | '/grupe'
+    | '/inscrieri'
+    | '/noutati'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contact'
+    | '/despre'
+    | '/galerie'
+    | '/grupe'
+    | '/inscrieri'
+    | '/noutati'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/despre'
+    | '/galerie'
+    | '/grupe'
+    | '/inscrieri'
+    | '/noutati'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  DespreRoute: typeof DespreRoute
+  GalerieRoute: typeof GalerieRoute
+  GrupeRoute: typeof GrupeRoute
+  InscrieriRoute: typeof InscrieriRoute
+  NoutatiRoute: typeof NoutatiRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/noutati': {
+      id: '/noutati'
+      path: '/noutati'
+      fullPath: '/noutati'
+      preLoaderRoute: typeof NoutatiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inscrieri': {
+      id: '/inscrieri'
+      path: '/inscrieri'
+      fullPath: '/inscrieri'
+      preLoaderRoute: typeof InscrieriRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grupe': {
+      id: '/grupe'
+      path: '/grupe'
+      fullPath: '/grupe'
+      preLoaderRoute: typeof GrupeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/galerie': {
+      id: '/galerie'
+      path: '/galerie'
+      fullPath: '/galerie'
+      preLoaderRoute: typeof GalerieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/despre': {
+      id: '/despre'
+      path: '/despre'
+      fullPath: '/despre'
+      preLoaderRoute: typeof DespreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +177,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  DespreRoute: DespreRoute,
+  GalerieRoute: GalerieRoute,
+  GrupeRoute: GrupeRoute,
+  InscrieriRoute: InscrieriRoute,
+  NoutatiRoute: NoutatiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
