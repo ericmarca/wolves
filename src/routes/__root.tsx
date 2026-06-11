@@ -11,6 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteHeader } from "../components/SiteHeader";
+import { SiteFooter } from "../components/SiteFooter";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -77,14 +80,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Wolves Basketball Academy — Baschet pentru copii în Bacău" },
+      { name: "description", content: "Academia de baschet pentru copii și juniori din Bacău. Tehnică, disciplină, spirit de echipă. Înscrie-te la un antrenament gratuit." },
+      { name: "author", content: "Wolves Basketball Academy" },
+      { property: "og:title", content: "Wolves Basketball Academy" },
+      { property: "og:description", content: "Formăm campioni pe teren și caractere pentru viață — baschet pentru copii și juniori în Bacău." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -118,8 +120,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-dvh flex-col bg-background text-foreground">
+        <SiteHeader />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <SiteFooter />
+        <Toaster theme="dark" position="top-center" richColors />
+      </div>
     </QueryClientProvider>
   );
 }
