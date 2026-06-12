@@ -49,12 +49,31 @@ function InscrieriPage() {
     }
     setErrors({});
     setSubmitting(true);
-    // MVP — fără backend. Mock submit.
-    await new Promise((r) => setTimeout(r, 600));
-    setSubmitting(false);
-    setDone(true);
-    toast.success("Mulțumim! Te contactăm în curând.");
-    (e.target as HTMLFormElement).reset();
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/ericmarca2008@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: "Înscriere nouă — Wolves Basketball Academy",
+          _template: "table",
+          _captcha: "false",
+          "Nume copil": result.data.childName,
+          "Vârstă": result.data.age,
+          "Nume părinte": result.data.parentName,
+          "Telefon": result.data.phone,
+          "Email": result.data.email,
+          "Mesaj": result.data.message || "-",
+        }),
+      });
+      if (!res.ok) throw new Error("Submit failed");
+      setDone(true);
+      toast.success("Mulțumim! Te contactăm în curând.");
+      (e.target as HTMLFormElement).reset();
+    } catch {
+      toast.error("A apărut o eroare. Încearcă din nou sau sună-ne direct.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Facebook, HandCoins, Handshake, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, HandCoins, Handshake, Mail, MapPin, Phone, Send } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -11,6 +14,12 @@ export const Route = createFileRoute("/contact")({
     ],
   }),
   component: ContactPage,
+});
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Nume invalid").max(80),
+  email: z.string().trim().email("Email invalid").max(120),
+  message: z.string().trim().min(5, "Scrie un mesaj").max(1000),
 });
 
 function ContactPage() {
@@ -43,6 +52,16 @@ function ContactPage() {
             referrerPolicy="no-referrer-when-downgrade"
             className="min-h-[360px] w-full border-0"
           />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60" aria-labelledby="form-heading">
+        <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+          <h2 id="form-heading" className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">
+            Trimite-ne un mesaj
+          </h2>
+          <p className="mt-3 text-muted-foreground">Răspundem în maxim 48 de ore.</p>
+          <ContactForm />
         </div>
       </section>
 
@@ -120,5 +139,78 @@ function ContactItem({
     <a href={href} target="_blank" rel="noreferrer">{content}</a>
   ) : (
     <a href={href}>{content}</a>
+  );
+}
+
+function ContactForm() {
+  const [errors, setErrors] = useState<Partial<Record<"name" | "email" | "message", string>>>({});
+  const [submitting, setSubmitting] = useState(false);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
+    const parsed = contactSchema.safeParse(data);
+    if (!parsed.success) {
+      const next: Partial<Record<"name" | "email" | "message", string>> = {};
+      for (const issue of parsed.error.issues) {
+        const k = issue.path[0] as "name" | "email" | "message";
+        if (!next[k]) next[k] = issue.message;
+      }
+      setErrors(next);
+      toast.error("Verifică datele din formular");
+      return;
+    }
+    setErrors({});
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/ericmarca2008@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: "Mesaj contact — Wolves Basketball Academy",
+          _template: "table",
+          _captcha: "false",
+          Nume: parsed.data.name,
+          Email: parsed.data.email,
+          Mesaj: parsed.data.message,
+        }),
+      });
+      if (!res.ok) throw new Error("fail");
+      toast.success("Mulțumim! Mesajul a fost trimis.");
+      form.reset();
+    } catch {
+      toast.error("A apărut o eroare. Încearcă din nou.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={onSubmit} noValidate className="mt-8 space-y-5 rounded-2xl border border-border/60 bg-card p-6 sm:p-8">
+      <div>
+        <label htmlFor="name" className="mb-2 block text-sm font-semibold text-foreground">Nume <span className="text-primary">*</span></label>
+        <input id="name" name="name" type="text" autoComplete="name" required aria-invalid={!!errors.name}
+          className={`w-full rounded-md border bg-background px-3.5 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.name ? "border-destructive" : "border-input focus:border-primary"}`} />
+        {errors.name && <p role="alert" className="mt-1.5 text-xs font-medium text-destructive">{errors.name}</p>}
+      </div>
+      <div>
+        <label htmlFor="email" className="mb-2 block text-sm font-semibold text-foreground">Email <span className="text-primary">*</span></label>
+        <input id="email" name="email" type="email" autoComplete="email" required aria-invalid={!!errors.email}
+          className={`w-full rounded-md border bg-background px-3.5 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.email ? "border-destructive" : "border-input focus:border-primary"}`} />
+        {errors.email && <p role="alert" className="mt-1.5 text-xs font-medium text-destructive">{errors.email}</p>}
+      </div>
+      <div>
+        <label htmlFor="message" className="mb-2 block text-sm font-semibold text-foreground">Mesaj <span className="text-primary">*</span></label>
+        <textarea id="message" name="message" rows={5} maxLength={1000} required aria-invalid={!!errors.message}
+          className={`w-full rounded-md border bg-background px-3.5 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${errors.message ? "border-destructive" : "border-input focus:border-primary"}`} />
+        {errors.message && <p role="alert" className="mt-1.5 text-xs font-medium text-destructive">{errors.message}</p>}
+      </div>
+      <button type="submit" disabled={submitting}
+        className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-[var(--shadow-gold)] transition-transform hover:scale-[1.01] disabled:opacity-60">
+        {submitting ? "Se trimite..." : "Trimite mesajul"}
+        {!submitting && <Send className="h-4 w-4" aria-hidden />}
+      </button>
+    </form>
   );
 }
