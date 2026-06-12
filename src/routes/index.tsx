@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
 const benefits = [
   { icon: ShieldCheck, title: "Antrenori dedicați", desc: "Profesioniști cu experiență, care îți ghidează copilul pas cu pas." },
   { icon: Users, title: "Spirit de echipă", desc: "Colegialitate, respect și prietenii care durează dincolo de teren." },
-  { icon: Dumbbell, title: "Dezvoltare fizică & mentală", desc: "Coordonare, rezistență, încredere în sine și autodisciplină." },
+  { icon: Dumbbell, title: "Dezvoltare fizică & mentală", desc: "Coordonare, rezistență, încredere în sine și disciplină." },
   { icon: Calendar, title: "Grupe pentru toate vârstele", desc: "Programe adaptate de la 5 la 18 ani — inițiere până la performanță." },
 ];
 
