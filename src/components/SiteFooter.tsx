@@ -43,7 +43,7 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <Phone className="mt-0.5 h-4 w-4 text-primary" aria-hidden />
-              <a href="tel:+40700000000" className="hover:text-foreground">+40 700 000 000</a>
+              <a href="tel:+40754097711" className="hover:text-foreground">+40 754 097 711</a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="mt-0.5 h-4 w-4 text-primary" aria-hidden />

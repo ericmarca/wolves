@@ -27,9 +27,9 @@ function ContactPage() {
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8">
         <div className="space-y-6">
-          <ContactItem icon={Phone} label="Telefon" value="+40 700 000 000" href="tel:+40700000000" />
+          <ContactItem icon={Phone} label="Telefon" value="+40 754 097 711" href="tel:+40754097711" />
           <ContactItem icon={Mail} label="Email" value="contact@wolvesbacau.ro" href="mailto:contact@wolvesbacau.ro" />
-          <ContactItem icon={MapPin} label="Adresă sală" value="Sala de sport, Bacău, România" />
+          <ContactItem icon={MapPin} label="Adresă sală" value=" Bacău, România" />
           <ContactItem icon={Facebook} label="Facebook" value="Wolves Basketball Academy" href="https://facebook.com" external />
         </div>
 
