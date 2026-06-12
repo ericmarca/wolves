@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Facebook, HandCoins, Handshake, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, HandCoins, Handshake, Mail, MapPin, Phone, Send } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -11,6 +14,12 @@ export const Route = createFileRoute("/contact")({
     ],
   }),
   component: ContactPage,
+});
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Nume invalid").max(80),
+  email: z.string().trim().email("Email invalid").max(120),
+  message: z.string().trim().min(5, "Scrie un mesaj").max(1000),
 });
 
 function ContactPage() {
@@ -43,6 +52,16 @@ function ContactPage() {
             referrerPolicy="no-referrer-when-downgrade"
             className="min-h-[360px] w-full border-0"
           />
+        </div>
+      </section>
+
+      <section className="border-t border-border/60" aria-labelledby="form-heading">
+        <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+          <h2 id="form-heading" className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">
+            Trimite-ne un mesaj
+          </h2>
+          <p className="mt-3 text-muted-foreground">Răspundem în maxim 48 de ore.</p>
+          <ContactForm />
         </div>
       </section>
 
