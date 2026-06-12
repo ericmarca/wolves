@@ -34,7 +34,6 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-2 text-sm">
             <li><Link to="/inscrieri" className="text-muted-foreground hover:text-foreground">Înscrie-te</Link></li>
             <li><Link to="/contact" className="text-muted-foreground hover:text-foreground">Devino sponsor</Link></li>
-            <li><Link to="/contact" className="text-muted-foreground hover:text-foreground">Redirecționează 3.5%</Link></li>
           </ul>
         </div>
 
